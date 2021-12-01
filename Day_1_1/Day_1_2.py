@@ -15,12 +15,12 @@ def main():
     input_list.append(int(raw_list[i].strip('\n')))  ##strip newline and convert to int
 
   #do stuff
-  for i in range(1,len(input_list)):
-    x = input_list[i]
+  for i in range(4,len(input_list)):
+    x = input_list[i-3] + input_list[i-2] + input_list[i-1]
     
-    y = input_list[i-1]
+    y = input_list[i-2] + input_list[i-1] + input_list[i]
 
-    if (x > y):
+    if (y > x):
       increases += 1
 
 
