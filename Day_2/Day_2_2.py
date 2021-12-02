@@ -7,19 +7,22 @@ def process_command(current_pos, command):
 
   direction = x[0]
   magnitude = int(x[1])
-  new_position =[0,0]
+  new_position =[0,0,0]
 
   if direction == 'forward':
     new_position[0] = current_pos[0]+magnitude
-    new_position[1] = current_pos[1]
+    new_position[1] = current_pos[1]+current_pos[2]*magnitude
+    new_position[2] = current_pos[2]
 
   elif direction == 'up':
     new_position[0] = current_pos[0]
-    new_position[1] = current_pos[1]-magnitude
+    new_position[1] = current_pos[1]
+    new_position[2] = current_pos[2]-magnitude
 
   elif direction == 'down':
     new_position[0] = current_pos[0]
-    new_position[1] = current_pos[1]+magnitude
+    new_position[1] = current_pos[1]
+    new_position[2] = current_pos[2]+magnitude
 
   else:
     #print(new_position)
@@ -46,7 +49,7 @@ def main():
     #print(input_list)
 
   #do stuff
-  current_pos = [0,0]
+  current_pos = [0,0,0]  #x position, y position, aim
   
   for i in range(len(input_list)):
     current_pos = process_command(current_pos, input_list[i])
