@@ -9,7 +9,7 @@ def char_array_to_int(char_array):
 
   return int_array
 
-def calc_fuel(index, locations):
+def calc_fuel_part1(index, locations):
   fuel = 0
 
   for i in range(len(locations)):
@@ -17,6 +17,15 @@ def calc_fuel(index, locations):
 
   return fuel
 
+def calc_fuel_part2(index, locations):
+  fuel = 0
+
+  for i in range(len(locations)):
+    for j in range(abs(locations[i]-index)+1):
+      fuel += j
+
+  #print(fuel)
+  return fuel
 
 def main():
   Day = 7
@@ -41,7 +50,7 @@ def main():
   #convert to int array
   int_input = char_array_to_int(input_list[0].split(','))
   
-  print(int_input)
+  #print(int_input)
 
   max = 0
 
@@ -49,17 +58,29 @@ def main():
     if i > max:
       max = i
 
-  answer = max * len(int_input)
+  answer_pt1 = max * len(int_input)
 
   for i in range(max):
-    fuel = calc_fuel(i, int_input)
-    if fuel < answer:
-      answer = fuel
+    fuel = calc_fuel_part1(i, int_input)
+    if fuel < answer_pt1:
+      answer_pt1 = fuel
      
   #answer = calc_fuel(1,int_input)
 
+  answer_pt2 = max * calc_fuel_part2(max,int_input)
+
+  for i in range(max):
+    fuel = calc_fuel_part2(i, int_input)
+    if fuel < answer_pt2:
+      answer_pt2 = fuel
+
   #answer
-  print(answer)
+  print("Part 1:")
+  print(answer_pt1)
+
+  print("Part 2:")
+  print(answer_pt2)
+
   
 if __name__== "__main__":
   main()
