@@ -9,13 +9,28 @@ def char_array_to_int(char_array):
 
   return int_array
 
-def next_day(state):
-  for i in range(len(state)):
-    state[i] = state[i] - 1
-    if state[i] == -1:
-      state[i] = 6
-      state.append(8)
-  return state
+def next_day(fish_age):
+  #for i in range(len(state)):
+  #  state[i] = state[i] - 1
+  #  if state[i] == -1:
+  #    state[i] = 6
+  #    state.append(8)
+
+  old_fish_age = list(fish_age)
+
+  fish_age[8] = old_fish_age[0] 
+  fish_age[7] = old_fish_age[8]
+  fish_age[6] = old_fish_age[7] + old_fish_age[0]
+  fish_age[5] = old_fish_age[6]
+  fish_age[4] = old_fish_age[5]
+  fish_age[3] = old_fish_age[4]
+  fish_age[2] = old_fish_age[3]
+  fish_age[1] = old_fish_age[2]
+  fish_age[0] = old_fish_age[1]
+ 
+  print(fish_age)
+
+  return fish_age
 
 def main():
   Day = 6
@@ -36,10 +51,6 @@ def main():
   #process list into list of integers
   for i in range(len(raw_list)):
     input_list.append(raw_list[i].strip('\n'))  ##strip newline
-  
-  #split_input_list = input_list.split() 
-  
-  #print(input_list)
 
   #convert to int array
   int_input = char_array_to_int(input_list[0].split(','))
@@ -48,14 +59,25 @@ def main():
 
   print("Initial State:" + str(int_input))
 
-  num_days = 80
+  #convert input into number of lantern fish for each age 1-6
+  fish_age =[0,0,0,0,0,0,0,0,0]  #initialize all quantities of fish to 0
+
+  for i in range(len(int_input)):
+    for x in range(8):
+      if int_input[i] == x:
+        fish_age[x] += 1
+
+  print("Initial fish age quantities")
+  print (fish_age)
+
+  num_days = 256
 
   for i in range(num_days):
-    int_input = next_day(list(int_input))
-    print("After "+str(i+1)+" days:" + str(int_input))
+    fish_age = next_day(fish_age)
+    #print("After "+str(i+1)+" days:" + str(int_input))
 
 
-  answer = len(int_input)
+  answer = sum(fish_age)
 
   #answer
   print(answer)
