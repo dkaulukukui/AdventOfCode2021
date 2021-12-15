@@ -13,6 +13,37 @@ def char_array_to_int(char_array):
 
   return int_array
 
+def pos_edge_cases(position, heightmap):
+  updated_pos = [0,0]
+
+  return updated_pos
+
+def add_pos_to_check(position, heightmap, pos_to_check):
+  y = position[1]
+  x = position[0]
+
+  #print(heightmap)
+  
+  # for each direction if not out of bounds then add to pos to check
+  #up
+  if (y-1) >= 0: 
+    pos_to_check.append([x,y-1])
+   
+  #down
+  if (y+1) < len(heightmap): 
+    pos_to_check.append([x,y+1])
+
+  #left
+  if (x-1) >=0:
+    pos_to_check.append([x-1,y])
+
+  #right
+  if x+1 < len(heightmap[0]):
+    pos_to_check.append([x+1,y])
+
+  return(pos_to_check)
+
+
 
 def main():
   Day = 9
@@ -52,6 +83,7 @@ def main():
 
   #find low points in input map
 
+  low_points = []
   low_point_risk = []
 
   for y in range(len(int_input)):
@@ -84,17 +116,61 @@ def main():
 
       if current_value < up and current_value < down and current_value < left and current_value <right:
         #lowpoint
-        print("lowpoint at " + str(x) + "," + str(y))
+        #print("lowpoint at " + str(x) + "," + str(y))
+        low_points.append([x,y])
         low_point_risk.append(current_value+1)
+
+  print(low_points)
+
+  #part 2,  For each low point, determine the basin size.  multiply the 3 largest basin sizes
+
+    #pos_to_check = []
+  #pos_in_basin = []
+  pos_queue = []
+  pos_checked = []
+  basins = []
+
+  for i in range(len(low_points)):  # for each low point determin basin size
+
+    #print("Checking Basin around lowpoint at " + str(low_points[i])) 
+
+    basin_size = 0
+    y = low_points[i][1]
+    x = low_points[i][0]
+    
+    #add initial points to check
+    pos_queue = add_pos_to_check(low_points[i], int_input, pos_queue)
+    basin_size += 1
+    pos_checked.append(low_points[i])
+    
+    #for a given position, check if it is not part of a basin (9)
+  
+    while len(pos_queue) > 0:
+      position = pos_queue.pop()
+      #print ("checking position: " + str(position))
+      pos_value = int_input[position[1]][position[0]]
+
+      if position not in pos_checked and pos_value != 9:
+        pos_queue = add_pos_to_check(position,int_input,pos_queue)
+        basin_size += 1
+
+      pos_checked.append(position) 
+    
+    #print("Basin size is " + str(basin_size))
+    basins.append(basin_size)
+           
+  basins.sort(reverse=True)
+
 
   #answer
   print("Part 1:")
   print(sum(low_point_risk))
 
   print("Part 2:")
-  print("NULL")
+  print(basins[0]*basins[1]*basins[2])
 
   
 if __name__== "__main__":
   main()
 
+  filename = "input.txt"
