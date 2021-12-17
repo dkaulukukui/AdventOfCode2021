@@ -1,5 +1,8 @@
 import pprint
 
+def split(word):
+    return [char for char in word]
+
 def char_array_to_int(char_array):
   
   int_array = []
