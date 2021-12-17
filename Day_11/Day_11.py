@@ -36,8 +36,9 @@ def main():
 
   print(input_list)
 
-  num_step = 100
+  num_step = 2000
   num_flashes = 0
+  complete_flash_Step = 0
 
   for i in range(num_step): #iterate the # of steps indicated
 
@@ -91,6 +92,9 @@ def main():
     
     logging.debug(input_list)
 
+    if complete_flash_Step == 0 and len(flashed) == 100:
+        complete_flash_Step = i+1
+
     num_flashes += len(flashed)
     #print(flashed)
 
@@ -99,7 +103,7 @@ def main():
   print(num_flashes)
 
   print("Part 2:")
-  print("NULL")
+  print(complete_flash_Step)
 
   
 if __name__== "__main__":
